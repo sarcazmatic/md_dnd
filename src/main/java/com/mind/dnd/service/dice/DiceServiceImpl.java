@@ -1,12 +1,11 @@
 package com.mind.dnd.service.dice;
 
-import com.mind.dnd.service.ResponseService;
+import com.mind.dnd.service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ public class DiceServiceImpl implements DiceService {
 
     private final Random random = new Random();
 
+    @Override
     public SendMessage diceRequest(long chatId, String name) {
         String answer = "Бросай куб, " + name + "!";
         SendMessage sendMessage = responseService.makeAnswer(chatId, answer);
@@ -32,6 +32,7 @@ public class DiceServiceImpl implements DiceService {
         return sendMessage;
     }
 
+    @Override
     public SendMessage rollDice(String chatId, String diceType, Integer count) {
         int diceTypeAtIndex = diceType.lastIndexOf("D");
         int diceSides = Integer.parseInt(diceType.substring(diceTypeAtIndex + 1));
@@ -65,6 +66,7 @@ public class DiceServiceImpl implements DiceService {
         return diceRollReply;
     }
 
+    @Override
     public Integer rollResult(Integer count, int diceSides) {
         int result = 0;
         for (int i = 0; i < count; i++) {
